@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, type Request, type Response } from "express";
 import { db } from "@workspace/db";
 import { diseasesTable } from "@workspace/db";
 import { eq } from "drizzle-orm";
@@ -154,7 +154,7 @@ async function fetchWikimediaLabImages(query: string): Promise<Array<{ url: stri
   }
 }
 
-router.get("/diseases/:id/images", async (req, res) => {
+router.get("/diseases/:id/images", async (req: Request, res: Response) => {
   const parsed = GetDiseaseImagesParams.safeParse(req.params);
   if (!parsed.success) {
     res.status(400).json({ error: "Invalid id" });

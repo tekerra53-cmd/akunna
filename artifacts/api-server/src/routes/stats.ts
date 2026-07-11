@@ -1,11 +1,11 @@
-import { Router } from "express";
+import { Router, type Request, type Response } from "express";
 import { db } from "@workspace/db";
 import { predictionsTable } from "@workspace/db";
 import { desc, sql, count, avg } from "drizzle-orm";
 
 const router = Router();
 
-router.get("/stats/summary", async (_req, res) => {
+router.get("/stats/summary", async (_req: Request, res: Response) => {
   const totalResult = await db
     .select({ total: count() })
     .from(predictionsTable);
@@ -45,7 +45,7 @@ router.get("/stats/summary", async (_req, res) => {
   });
 });
 
-router.get("/stats/disease-distribution", async (_req, res) => {
+router.get("/stats/disease-distribution", async (_req: Request, res: Response) => {
   const totalResult = await db
     .select({ total: count() })
     .from(predictionsTable);
@@ -69,7 +69,7 @@ router.get("/stats/disease-distribution", async (_req, res) => {
   res.json(result);
 });
 
-router.get("/stats/recent-activity", async (_req, res) => {
+router.get("/stats/recent-activity", async (_req: Request, res: Response) => {
   const recent = await db
     .select()
     .from(predictionsTable)

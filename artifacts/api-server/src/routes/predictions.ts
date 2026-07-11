@@ -1,4 +1,4 @@
-import { Router } from "express";
+import { Router, type Request, type Response } from "express";
 import { db } from "@workspace/db";
 import { predictionsTable } from "@workspace/db";
 import { eq, desc, count, avg, sql } from "drizzle-orm";
@@ -44,7 +44,7 @@ function simulatePrediction(cropType: string) {
   };
 }
 
-router.get("/predictions", async (req, res) => {
+router.get("/predictions", async (req: Request, res: Response) => {
   const predictions = await db
     .select()
     .from(predictionsTable)
@@ -52,7 +52,7 @@ router.get("/predictions", async (req, res) => {
   res.json(predictions);
 });
 
-router.post("/predictions", async (req, res) => {
+router.post("/predictions", async (req: Request, res: Response) => {
   const parsed = CreatePredictionBody.safeParse(req.body);
   if (!parsed.success) {
     res.status(400).json({ error: "Invalid request body" });
@@ -78,7 +78,7 @@ router.post("/predictions", async (req, res) => {
   res.status(201).json(prediction);
 });
 
-router.get("/predictions/:id", async (req, res) => {
+router.get("/predictions/:id", async (req: Request, res: Response) => {
   const parsed = GetPredictionParams.safeParse(req.params);
   if (!parsed.success) {
     res.status(400).json({ error: "Invalid id" });
