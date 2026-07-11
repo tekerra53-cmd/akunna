@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-4">
+  <div>
+    <h1 class="h3 mb-1">Field Dashboard</h1>
+    <p class="text-muted mb-0">Live crop diagnosis summary from Python ML backend.</p>
+  </div>
+  <a href="{{ url_for('main.scan') }}" class="btn btn-success">+ Start New Scan</a>
+</div>
+
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card stat-card shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small">Total Scans</div>
+        <div class="display-6 fw-semibold">{{ stats.total_scans }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small">Healthy</div>
+        <div class="display-6 fw-semibold text-success">{{ stats.healthy_scans }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small">Diseased</div>
+        <div class="display-6 fw-semibold text-danger">{{ stats.diseased_scans }}</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card shadow-sm">
+      <div class="card-body">
+        <div class="text-muted small">Average Confidence</div>
+        <div class="display-6 fw-semibold">{{ (stats.avg_confidence * 100)|round(1) }}%</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row g-3">
+  <div class="col-lg-7">
+    <div class="card shadow-sm">
+      <div class="card-header d-flex justify-content-between align-items-center">
+        <span class="fw-semibold">Recent Predictions</span>
+        <a href="{{ url_for('main.history') }}" class="small">View all</a>
+      </div>
+      <div class="table-responsive">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>Crop</th>
+              <th>Disease</th>
+              <th>Confidence</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+          {% if recent %}
+            {% for row in recent %}
+            <tr>
+              <td class="text-capitalize">{{ row.crop_type }}</td>
+              <td><a href="{{ url_for('main.result_detail', prediction_id=row.id) }}">{{ row.disease_name }}</a></td>
+              <td>{{ (row.confidence * 100)|round(1) }}%</td>
+              <td class="text-muted small">{{ row.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+            </tr>
+            {% endfor %}
+          {% else %}
+            <tr><td colspan="4" class="text-center text-muted py-4">No scans yet.</td></tr>
+          {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-5">
+    <div class="card shadow-sm h-100">
+      <div class="card-header fw-semibold">Disease Distribution</div>
+      <div class="card-body">
+        {% if distribution %}
+          <ul class="list-group list-group-flush">
+            {% for disease_name, cnt in distribution %}
+              <li class="list-group-item d-flex justify-content-between align-items-center">
+                <span>{{ disease_name }}</span>
+                <span class="badge bg-secondary">{{ cnt }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p class="text-muted mb-0">Distribution will appear after scans are recorded.</p>
+        {% endif %}
+      </div>
+      <div class="card-footer text-muted small">
+        Most common diagnosis: <strong>{{ stats.most_common_disease }}</strong>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

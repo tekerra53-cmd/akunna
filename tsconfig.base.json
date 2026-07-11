@@ -1,7 +1,8 @@
 {
   "compilerOptions": {
     "isolatedModules": true,
-    "lib": ["es2022"],
+    "baseUrl": ".",
+    "lib": ["es2022", "DOM"],
     "module": "esnext",
     "moduleResolution": "bundler",
     "noEmitOnError": true,
@@ -20,6 +21,9 @@
     "skipLibCheck": true,
     "target": "es2022",
     "types": [],
+    "paths": {
+      "@workspace/*": ["lib/*/src", "lib/*/src/index.ts"]
+    },
     "customConditions": ["workspace"]
   }
 }

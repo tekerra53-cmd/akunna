@@ -47,3 +47,20 @@ Thumbs.db
 # Replit
 .cache/
 .local/
+
+# Python app
+python_site/.venv/
+python_site/venv/
+python_site/__pycache__/
+python_site/**/*.pyc
+python_site/**/__pycache__/
+python_site/instance/*.db
+python_site/uploads/*
+!python_site/uploads/.gitkeep
+python_site/models/*.pt
+python_site/models/*.pth
+python_site/models/*.safetensors
+python_site/.env
+python_site/dataset/
+*.pyc
+__pycache__/

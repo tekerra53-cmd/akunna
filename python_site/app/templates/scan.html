@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-8">
+    <div class="card shadow-sm">
+      <div class="card-header">
+        <h1 class="h5 mb-1">New Crop Scan</h1>
+        <p class="text-muted small mb-0">Upload a clear leaf photo. The model predicts crop + disease + confidence.</p>
+      </div>
+      <div class="card-body">
+        <div class="alert alert-info" role="alert">
+          Best current demo coverage: tomato, potato, maize, pepper, cassava, rice, apple, and grape.
+        </div>
+        <form method="post" enctype="multipart/form-data" class="vstack gap-3">
+          <div>
+            <label class="form-label">Crop (select crop for better result)</label>
+            <select name="crop_type" class="form-select">
+              <option value="auto" selected>Auto-detect crop</option>
+              {% for crop in crop_options %}
+              <option value="{{ crop }}">{{ crop|capitalize }}</option>
+              {% endfor %}
+            </select>
+            <div class="form-text">Leave on auto unless you want to force a specific crop family.</div>
+          </div>
+
+          <div>
+            <label class="form-label">Leaf Image</label>
+            <input type="file" name="leaf_image" class="form-control" accept=".jpg,.jpeg,.png,.webp,image/*" required>
+          </div>
+
+          <div class="d-flex gap-2">
+            <button type="submit" class="btn btn-success">Analyze Image</button>
+            <a href="{{ url_for('main.history') }}" class="btn btn-outline-secondary">View History</a>
+          </div>
+        </form>
+      </div>
+      <div class="card-footer small text-muted">
+        For the strongest demo, use a clear close-up of a single leaf and choose the crop hint when you know it.
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

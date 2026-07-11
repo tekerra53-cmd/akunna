@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h1 class="h4 mb-1">{{ disease.name }}</h1>
+    <p class="text-muted mb-0 text-capitalize">Crop: {{ disease.crop_type }}</p>
+  </div>
+  <a class="btn btn-outline-secondary" href="{{ url_for('main.diseases') }}">Back</a>
+</div>
+
+<div class="card shadow-sm">
+  <div class="card-body">
+    <p><strong>Description:</strong> {{ disease.description }}</p>
+    <p><strong>Symptoms:</strong> {{ disease.symptoms }}</p>
+    <p><strong>Treatment:</strong> {{ disease.treatment }}</p>
+    <p class="mb-0"><strong>Severity:</strong> <span class="badge text-bg-{% if disease.severity == 'high' %}danger{% elif disease.severity == 'medium' %}warning{% else %}success{% endif %}">{{ disease.severity }}</span></p>
+  </div>
+</div>
+{% endblock %}
