@@ -310,4 +310,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 **Made with ❤️ for farmers and agricultural professionals worldwide** 🌾
 #   a k u n n a - c r o p - d i s e a s e - d e t e c t o r  
- 
+ # akunna
