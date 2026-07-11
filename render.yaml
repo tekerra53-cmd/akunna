@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: akunna-api-server
+    env: node
+    plan: free
+    branch: main
+    buildCommand: pnpm install && pnpm --filter @workspace/api-server run build
+    startCommand: pnpm --filter @workspace/api-server run start
+    healthCheckPath: /api/healthz
+    autoDeploy: true
