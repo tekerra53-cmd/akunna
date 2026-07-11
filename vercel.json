@@ -1,0 +1,16 @@
+{
+  "version": 3,
+  "buildCommand": "pnpm --filter @workspace/api-server run build",
+  "installCommand": "pnpm install",
+  "functions": {
+    "api/index.mjs": {
+      "runtime": "nodejs20.x"
+    }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.mjs"
+    }
+  ]
+}

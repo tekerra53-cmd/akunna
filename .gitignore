@@ -64,3 +64,6 @@ python_site/.env
 python_site/dataset/
 *.pyc
 __pycache__/
+
+.vercel
+.env*.local
